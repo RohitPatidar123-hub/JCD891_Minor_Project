@@ -5,12 +5,12 @@ contract user with Deployable {
     }
     
     reveive("Transection"){
-        let value: Int = ton("100");
+        let VALUE: Int = ton("100");
        
         send(SendParameters{
        
         to: sender(), 
-        value: 0, 
+        value: VALUE, 
         mode: SendRemainingValue | SendIgnoreErrors, // ...except for ones received from the sender due to SendRemainingValue
         body: "Deposit".asComment(), // asComment converts a String to a Cell with a comment
         });
@@ -19,7 +19,7 @@ contract user with Deployable {
         send(SendParameters{
        
         to: sender(),
-        value: 0, 
+        value: VALUE, 
         mode: SendRemainingValue | SendIgnoreErrors, // SendIgnoreErrors that would ignore errors during message sending and would continue to the next action.
         body: "Withdrwal".asComment(), // asComment converts a String to a Cell with a comment
         
