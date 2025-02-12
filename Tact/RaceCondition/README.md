@@ -2,8 +2,39 @@
 
 TON smart contracts process messages asynchronously. This means that when multiple messages are sent to a contract, there is no guaranteed order in which they are processed. As a result, a race condition can occur if your contract’s logic depends on the order of message execution.
 
+Q) How TON Bolckchain is Asynchronous ..?
 
-Q) How the Race Condition Can Occur ?
+The TON blockchain is asynchronous because smart contracts communicate via delayed message passing instead of instant function calls.
+
+1. Message-Driven Asynchronous Execution
+In TON, smart contracts do not call each other directly (like in Ethereum). Instead, they send messages to one another.
+These messages are processed asynchronously, meaning that when a contract sends a message to another contract, it does not wait for an immediate response.
+The receiving contract processes the message later when the message reaches it in the blockchain's transaction processing.
+
+2. Why is it Asynchronous?
+Parallel Processing: The TON blockchain is sharded, meaning that different contracts may be running on different shards (segments of the blockchain). Since these shards operate independently, messages between them cannot be executed instantly.
+Transactions Are Bundled into Blocks: A message is processed only when the transaction containing it is included in a new block. This means there is a delay between sending a message and it being executed.
+
+3. How Does It Work?
+A contract sends a message.
+The message is queued in the blockchain.
+When the recipient contract is ready (in its next transaction cycle), it receives and processes the message.
+If the recipient needs to send a response, it will send another asynchronous message.
+
+4. Analogy: Email vs. Phone Call
+Ethereum (Synchronous Calls): Like a phone call—you send a request, and the receiver responds instantly.
+TON (Asynchronous Messages): Like sending an email—you send it, but the recipient might read and reply later
+
+5. Implications of Asynchronous Execution
+Pros:
+Scalability: Since contracts don’t block each other while waiting for responses, more operations can be processed in parallel.
+Efficiency: Reduces network congestion by not forcing instant execution.
+Cons:
+More Complex Logic: Developers must design contracts carefully to handle delayed responses and message sequencing properly.
+No Instant Execution Guarantees: You must handle cases where a contract has to wait for another contract’s response.
+
+
+Q) How the Race Condition Can Occur in our smart contracts?
 
 1. Consider the following scenario:
 
